@@ -1,0 +1,26 @@
+
+# dependencies
+node_modules/
+
+# environment
+.env
+.env.local
+
+# build outputs
+dist/
+build/
+.turbo/
+
+# editor
+.DS_Store
+.vscode/
+*.log
+
+# prisma
+prisma/.prisma/
+prisma/migrations/
+
+# misc
+coverage/
+tmp/
+
