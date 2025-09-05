@@ -11,7 +11,7 @@ $pages = max(1, (int)ceil($total / $limit));
 ?>
 <?php include __DIR__ . '/partials/header.php'; ?>
 <?php include __DIR__ . '/partials/nav.php'; ?>
-<main class="container">
+<main id="main" class="container">
 	<h1>Wonders</h1>
 	<div class="layout" role="region" aria-label="Wonders overzicht">
 		<aside class="sidebar" aria-label="Filters">

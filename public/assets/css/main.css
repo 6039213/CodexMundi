@@ -6,6 +6,8 @@ p{margin:0 0 var(--s12)}
 a{color:var(--accent-2);text-decoration:none}
 a:hover{text-decoration:underline}
 img{max-width:100%;display:block;border-radius:var(--radius)}
+.skip-link{position:absolute;left:16px;top:-40px;background:var(--accent-2);color:#0e0f12;padding:8px 12px;border-radius:8px;transition:top .2s}
+.skip-link:focus{top:16px}
 .container{max-width:var(--maxw);margin:0 auto;padding:0 var(--s16)}
 .grid{display:grid;gap:var(--s16)}
 .grid-3{grid-template-columns:repeat(3,1fr)}

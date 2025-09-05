@@ -6,7 +6,7 @@ $user = current_user();
 ?>
 <?php include __DIR__ . '/../partials/header.php'; ?>
 <?php include __DIR__ . '/../partials/nav.php'; ?>
-<main class="container">
+<main id="main" class="container">
 	<h1>Dashboard</h1>
 	<div class="grid grid-3" style="margin-top:16px">
 		<div class="card"><div class="content"><h3>Mijn records</h3><p class="sub">Overzicht van jouw ingestuurde wonders</p></div></div>

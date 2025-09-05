@@ -10,7 +10,7 @@ $related = $data['related'];
 ?>
 <?php include __DIR__ . '/partials/header.php'; ?>
 <?php include __DIR__ . '/partials/nav.php'; ?>
-<main class="container">
+<main id="main" class="container">
 	<figure class="card" style="overflow:hidden">
 		<img class="card-cover" src="/public/assets/img/wonders/<?php echo e($w['slug']); ?>.jpg" alt="<?php echo e($w['title']); ?> headerbeeld" />
 	</figure>

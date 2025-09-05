@@ -9,7 +9,7 @@ $items = $data['items'];
 ?>
 <?php include __DIR__ . '/../partials/header.php'; ?>
 <?php include __DIR__ . '/../partials/nav.php'; ?>
-<main class="container">
+<main id="main" class="container">
 	<h1>Mijn wonderen</h1>
 	<a class="btn" href="/public/dashboard/wonder_new.php">Nieuw wonder</a>
 	<table class="table" aria-label="Mijn records" style="margin-top:12px">

@@ -11,3 +11,4 @@
 	<script defer src="/public/assets/js/main.js"></script>
 </head>
 <body>
+        <a class="skip-link" href="#main">Ga naar inhoud</a>
