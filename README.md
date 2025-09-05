@@ -1,40 +1,42 @@
+Codex Mundi — Digitaal archief van 21 wereldwonderen
 
-Codex Mundi — Digital Archive of the 21 World Wonders
-=====================================================
+Stack: HTML5, CSS3, vanilla JS, PHP 8 (PDO, sessions), MySQL, Leaflet (CDN)
 
-Quick start
------------
+Setup
+1) Maak database aan via phpMyAdmin
+   - Import eerst `database/schema.sql`
+   - Import daarna `database/seed.sql`
 
-1) Copy environment file
-
+2) Configureer database in `app/config.php` of maak `app/.env` met:
 ```
-cp .env.example .env
-```
-
-2) Start services
-
-```
-docker compose -f infra/docker-compose.yml up -d --build
-```
-
-3) Install dependencies and run
-
-```
-cd api && npm install && cd ../web && npm install
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_NAME=codex_mundi
+DB_USER=root
+DB_PASS=
 ```
 
-4) Prisma migrate & seed
+3) Start server
+   - Laragon/XAMPP: map `public/` als document root
+   - Of: `php -S localhost:8000 -t public`
 
-```
-cd api && npx prisma migrate dev && npm run seed
-```
+4) Demo-accounts
+   - admin@demo.test / Admin123!
+   - researcher@demo.test / Research123!
+   - editor@demo.test / Editor123!
 
-Services
---------
-- API: http://localhost:3000
-- Web: http://localhost:5173
-- Postgres: localhost:5432 (db: codexmundi)
-- MinIO API: http://localhost:9000, Console: http://localhost:9001
+Pagina's
+- Home: `/public/index.php`
+- Wonders: `/public/wonders.php`
+- Detail: `/public/wonder.php?slug=...`
+- Map: `/public/map.php`
+- Login/Registratie: `/public/login.php`, `/public/register.php`
+- Dashboard: `/public/dashboard/index.php`
 
-See docs/README.md for details.
+Beveiliging
+- PDO prepared statements, utf8mb4
+- CSRF token op POST (`helpers.php`)
+- Password hashing bij registratie en login via `password_verify`
+- Role checks met `require_role([...])`
+
 

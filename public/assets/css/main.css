@@ -1,0 +1,77 @@
+:root{--bg:#0e0f12;--card:#14161a;--muted:#1b1e24;--text:#e9ecf1;--sub:#b9c0cc;--accent:#d4af37;--accent-2:#6ea8fe;--ok:#2ecc71;--no:#e74c3c;--radius:14px;--maxw:1200px;--s4:4px;--s8:8px;--s12:12px;--s16:16px;--s24:24px}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55}
+h1,h2,h3,h4{font-family:"Playfair Display",serif;line-height:1.2;margin:0 0 var(--s12)}
+p{margin:0 0 var(--s12)}
+a{color:var(--accent-2);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;display:block;border-radius:var(--radius)}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 var(--s16)}
+.grid{display:grid;gap:var(--s16)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-1{grid-template-columns:1fr}
+@media (max-width:960px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.grid-3,.grid-2{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:0 6px 18px rgba(0,0,0,.35);overflow:hidden;border:1px solid rgba(255,255,255,.06);transition:transform .2s ease, box-shadow .2s ease, outline-color .2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.55);outline:2px solid rgba(212,175,55,.25)}
+.card .content{padding:var(--s16)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(180deg,#2a2e36,#1b1e24);border:1px solid rgba(255,255,255,.08);padding:10px 14px;border-radius:12px;color:var(--text);cursor:pointer;transition:transform .15s ease, outline-color .15s}
+.btn:hover{outline:2px solid rgba(212,175,55,.35)}
+.btn.accent{background:linear-gradient(180deg,#d8c26b,#d4af37);color:#111;border-color:#d4af37}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--muted);color:var(--sub);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:6px 10px;font-size:12px}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;border:1px solid rgba(255,255,255,.12)}
+.badge.green{background:#12351e;color:#9ff3b2;border-color:#204d2d}
+.badge.red{background:#351212;color:#f3a09f;border-color:#4d2020}
+.site-header{position:sticky;top:0;z-index:40;background:rgba(14,15,18,.8);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:"Playfair Display",serif;color:var(--text);font-size:20px}
+.main-nav a{margin-left:16px;color:var(--sub);position:relative}
+.main-nav a:hover{color:var(--text)}
+.main-nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-12px;margin:auto;width:24px;height:2px;background:var(--accent-2);border-radius:1px}
+.site-footer{border-top:1px solid rgba(255,255,255,.06);margin-top:48px;padding:24px 0;color:var(--sub)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between}
+.footer-inner nav a{margin-right:16px;color:var(--sub)}
+.hero{padding:56px 0}
+.hero h1{font-size:44px;letter-spacing:.5px}
+.searchbar{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:16px;border:1px solid rgba(255,255,255,.08);padding:10px 12px}
+.searchbar input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:16px}
+.searchbar:focus-within{outline:2px solid rgba(110,168,254,.35)}
+.layout{display:grid;grid-template-columns:280px 1fr;gap:24px}
+@media (max-width:960px){.layout{grid-template-columns:1fr}}
+.sidebar{position:sticky;top:88px;height:fit-content;background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:16px}
+.sidebar h3{font-size:16px;margin-bottom:12px}
+.sidebar .group{margin-bottom:16px}
+.controls{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.toggle{display:flex;gap:8px}
+.toggle button{background:var(--muted);border:1px solid rgba(255,255,255,.08);color:var(--sub);padding:6px 10px;border-radius:10px}
+.toggle button.active{background:var(--accent-2);color:#0e0f12;border-color:transparent}
+.card-list.list .card{display:flex}
+.card-cover{aspect-ratio:16/9;width:100%;object-fit:cover}
+.card-list.list .card .card-cover{width:260px;border-radius:0}
+.table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden}
+.table th,.table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
+.table tr:nth-child(odd){background:rgba(255,255,255,.01)}
+.table tr:hover{background:rgba(255,255,255,.03)}
+.input, select, textarea{width:100%;background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:12px;color:var(--text);padding:10px 12px}
+label{display:block;margin-bottom:6px;color:var(--sub);font-size:14px}
+.form-tabs{display:flex;gap:8px;margin-bottom:12px}
+.form-tabs button{background:var(--muted);border:1px solid rgba(255,255,255,.08);color:var(--sub);padding:8px 12px;border-radius:10px}
+.form-tabs button.active{background:var(--accent-2);color:#0e0f12}
+.tabs{display:grid;gap:0}
+.tab-panel{display:none;padding:16px;background:var(--card);border:1px solid rgba(255,255,255,.06);border-top:none;border-radius:0 0 var(--radius) var(--radius)}
+.tab-panel.active{display:block}
+.alert{position:fixed;top:16px;right:16px;background:var(--muted);border:1px solid rgba(255,255,255,.15);padding:12px 16px;border-radius:12px;z-index:100;color:var(--text);box-shadow:0 6px 18px rgba(0,0,0,.35);display:none}
+.alert.show{display:block}
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,.06),rgba(255,255,255,.12),rgba(255,255,255,.06));background-size:200% 100%;animation:shimmer 1.2s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.hidden{display:none}
+.sub{color:var(--sub)}
+.pagination{display:flex;gap:8px;justify-content:center;margin:20px 0}
+.pagination a{background:var(--muted);border:1px solid rgba(255,255,255,.08);color:var(--text);padding:8px 12px;border-radius:10px}
+.leaflet-container{border-radius:var(--radius);border:1px solid rgba(255,255,255,.08)}
+
+/* Reveal on scroll */
+.reveal{opacity:0;transform:translateY(8px);transition:opacity .5s ease, transform .5s ease}
+.reveal.show{opacity:1;transform:none}
