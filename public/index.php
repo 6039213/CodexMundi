@@ -7,7 +7,7 @@ $counts = Wonder::countsByContinent();
 ?>
 <?php include __DIR__ . '/partials/header.php'; ?>
 <?php include __DIR__ . '/partials/nav.php'; ?>
-<main class="container">
+<main id="main" class="container">
 	<section class="hero" aria-label="Zoek">
 		<h1>Codex Mundi</h1>
 		<p class="sub">Digitaal archief van 21 wereldwonderen</p>

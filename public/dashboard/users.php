@@ -8,7 +8,7 @@ $users = User::all();
 ?>
 <?php include __DIR__ . '/../partials/header.php'; ?>
 <?php include __DIR__ . '/../partials/nav.php'; ?>
-<main class="container">
+<main id="main" class="container">
 	<h1>Users</h1>
 	<table class="table" aria-label="Users">
 		<thead><tr><th>ID</th><th>Email</th><th>Rol</th><th>Aangemaakt</th><th>Actie</th></tr></thead>

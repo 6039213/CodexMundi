@@ -5,7 +5,7 @@ require_role(['researcher','admin']);
 ?>
 <?php include __DIR__ . '/../partials/header.php'; ?>
 <?php include __DIR__ . '/../partials/nav.php'; ?>
-<main class="container">
+<main id="main" class="container">
 	<h1>Nieuw wonder</h1>
 	<div class="form-tabs">
 		<button class="tab-btn active" data-target="tab-basic">Basis</button>

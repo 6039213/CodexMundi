@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <?php include __DIR__ . '/partials/header.php'; ?>
 <?php include __DIR__ . '/partials/nav.php'; ?>
-<main class="container">
+<main id="main" class="container">
 	<h1>Registreren</h1>
 	<?php if ($success): ?>
 		<div class="alert show">Account aangemaakt. Je kunt nu inloggen.</div>

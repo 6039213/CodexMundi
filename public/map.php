@@ -3,7 +3,7 @@ require_once __DIR__ . '/../app/lib/helpers.php';
 ?>
 <?php include __DIR__ . '/partials/header.php'; ?>
 <?php include __DIR__ . '/partials/nav.php'; ?>
-<main class="container">
+<main id="main" class="container">
 	<h1>Wereldkaart</h1>
 	<div id="map" style="height:80vh;margin-top:12px"></div>
 </main>
