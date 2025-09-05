@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 	const map = L.map('map').setView([20, 0], 2);
 	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19}).addTo(map);
 	try{
-		const res = await fetch('/public/map_points.php');
+                const res = await fetch('/map_points.php');
 		const points = await res.json();
 		points.forEach(p=>{
 			if(!p.lat || !p.lng) return;
 			const m = L.marker([p.lat, p.lng]);
-			m.bindPopup(`<a href="/public/wonder.php?slug=${p.slug}">${p.title}</a>`);
+                        m.bindPopup(`<a href="/wonder.php?slug=${p.slug}">${p.title}</a>`);
 			m.addTo(map);
 		});
 	}catch(e){ console.error(e); }

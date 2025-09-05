@@ -61,8 +61,8 @@ $pages = max(1, (int)ceil($total / $limit));
 			<div id="wonder-list" class="grid grid-3 card-list" aria-live="polite">
 				<?php foreach ($items as $w): ?>
 					<article class="card" data-title="<?php echo e($w['title']); ?>" data-category="<?php echo e($w['category']); ?>" data-continent="<?php echo e($w['continent']); ?>" data-year="<?php echo (int)$w['year_built']; ?>" data-exists="<?php echo (int)$w['exists_now']; ?>">
-						<a href="/public/wonder.php?slug=<?php echo e($w['slug']); ?>" aria-label="Bekijk <?php echo e($w['title']); ?>">
-							<img class="card-cover" src="/public/assets/img/wonders/<?php echo e($w['slug']); ?>.jpg" alt="<?php echo e($w['title']); ?>" />
+                                        <a href="/wonder.php?slug=<?php echo e($w['slug']); ?>" aria-label="Bekijk <?php echo e($w['title']); ?>">
+                                                <img class="card-cover" src="/assets/img/wonders/<?php echo e($w['slug']); ?>.jpg" alt="<?php echo e($w['title']); ?>" />
 						</a>
 						<div class="content">
 							<h3><?php echo e($w['title']); ?></h3>
@@ -71,7 +71,7 @@ $pages = max(1, (int)ceil($total / $limit));
 								<span class="chip"><?php echo e($w['category']); ?></span>
 								<span class="badge <?php echo $w['exists_now']?'green':'red'; ?>"><?php echo $w['exists_now']?'Bestaat nog':'Bestaat niet'; ?></span>
 							</div>
-							<a class="btn" href="/public/wonder.php?slug=<?php echo e($w['slug']); ?>">Bekijken</a>
+                                                        <a class="btn" href="/wonder.php?slug=<?php echo e($w['slug']); ?>">Bekijken</a>
 						</div>
 					</article>
 				<?php endforeach; ?>

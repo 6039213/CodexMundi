@@ -35,7 +35,7 @@
 
 	-- Media (one image each placeholder)
 	INSERT INTO media (wonder_id, type, url, mime, size, status, created_by)
-	SELECT id, 'image', CONCAT('/public/assets/img/wonders/', slug, '.jpg'), 'image/jpeg', 12345, 'approved', 1 FROM wonders;
+        SELECT id, 'image', CONCAT('/assets/img/wonders/', slug, '.jpg'), 'image/jpeg', 12345, 'approved', 1 FROM wonders;
 
 	-- Basic tag assignments
 	INSERT INTO wonder_tags (wonder_id, tag_id, added_by)

@@ -12,7 +12,7 @@ $related = $data['related'];
 <?php include __DIR__ . '/partials/nav.php'; ?>
 <main class="container">
 	<figure class="card" style="overflow:hidden">
-		<img class="card-cover" src="/public/assets/img/wonders/<?php echo e($w['slug']); ?>.jpg" alt="<?php echo e($w['title']); ?> headerbeeld" />
+                <img class="card-cover" src="/assets/img/wonders/<?php echo e($w['slug']); ?>.jpg" alt="<?php echo e($w['title']); ?> headerbeeld" />
 	</figure>
 	<header style="margin:16px 0">
 		<h1><?php echo e($w['title']); ?></h1>
@@ -54,9 +54,9 @@ $related = $data['related'];
 		<h3>Gerelateerde wonderen</h3>
 		<div class="grid grid-3">
 			<?php foreach ($related as $r): ?>
-				<article class="card">
-					<a href="/public/wonder.php?slug=<?php echo e($r['slug']); ?>">
-						<img class="card-cover" src="/public/assets/img/wonders/<?php echo e($r['slug']); ?>.jpg" alt="<?php echo e($r['title']); ?>" />
+                                <article class="card">
+                                        <a href="/wonder.php?slug=<?php echo e($r['slug']); ?>">
+                                                <img class="card-cover" src="/assets/img/wonders/<?php echo e($r['slug']); ?>.jpg" alt="<?php echo e($r['title']); ?>" />
 					</a>
 					<div class="content"><h4><?php echo e($r['title']); ?></h4></div>
 				</article>

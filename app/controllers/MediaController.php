@@ -16,11 +16,12 @@ class MediaController
 		$wonderId = (int)($_POST['wonder_id'] ?? 0);
 		$ext = pathinfo($f['name'], PATHINFO_EXTENSION) ?: 'bin';
 		$slug = $_POST['slug'] ?? ('wonder-' . $wonderId);
-		$destDir = __DIR__ . '/../../public/assets/img/wonders';
-		@mkdir($destDir, 0777, true);
-		$destRel = '/public/assets/img/wonders/' . $slug . '-' . time() . '.' . $ext;
-		$destAbs = __DIR__ . '/../../' . ltrim($destRel, '/');
-		if (!move_uploaded_file($f['tmp_name'], $destAbs)) return 'Kon bestand niet opslaan';
+                $destDir = __DIR__ . '/../../public/assets/img/wonders';
+                @mkdir($destDir, 0777, true);
+                $filename = $slug . '-' . time() . '.' . $ext;
+                $destRel = '/assets/img/wonders/' . $filename;
+                $destAbs = $destDir . '/' . $filename;
+                if (!move_uploaded_file($f['tmp_name'], $destAbs)) return 'Kon bestand niet opslaan';
 		$pdo = get_pdo();
 		$stmt = $pdo->prepare('INSERT INTO media(wonder_id,type,url,mime,size,status,created_by) VALUES(?,?,?,?,?,"pending",?)');
 		$stmt->execute([$wonderId, (strpos($f['type'],'image')===0?'image':'document'), $destRel, $f['type'], (int)$f['size'], current_user()['id'] ?? null]);

@@ -26,12 +26,12 @@ DB_PASS=
    - editor@demo.test / Editor123!
 
 Pagina's
-- Home: `/public/index.php`
-- Wonders: `/public/wonders.php`
-- Detail: `/public/wonder.php?slug=...`
-- Map: `/public/map.php`
-- Login/Registratie: `/public/login.php`, `/public/register.php`
-- Dashboard: `/public/dashboard/index.php`
+- Home: `/index.php`
+- Wonders: `/wonders.php`
+- Detail: `/wonder.php?slug=...`
+- Map: `/map.php`
+- Login/Registratie: `/login.php`, `/register.php`
+- Dashboard: `/dashboard/index.php`
 
 Beveiliging
 - PDO prepared statements, utf8mb4
