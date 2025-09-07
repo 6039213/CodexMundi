@@ -4,10 +4,13 @@ const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
 
 // Nav active
 function initNavActive(){
-	const here = location.pathname + (location.search? '':'');
-	$$('a[data-nav]').forEach(a=>{
-		if(here.startsWith(a.getAttribute('data-nav'))) a.classList.add('active');
-	});
+    const here = location.pathname;
+    $$('a[data-nav]').forEach(a=>{
+        const target = a.getAttribute('data-nav');
+        if((target === '/' && here === '/') || (target !== '/' && here.startsWith(target))) {
+            a.classList.add('active');
+        }
+    });
 }
 
 // Toasts

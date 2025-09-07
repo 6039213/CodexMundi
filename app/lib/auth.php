@@ -44,9 +44,9 @@ function auth_logout(): void {
 }
 
 function require_auth(): void {
-	if (!current_user()) {
-		redirect('/public/login.php');
-	}
+    if (!current_user()) {
+		redirect('/login.php');
+    }
 }
 
 function require_role_or_redirect(array $roles): void {

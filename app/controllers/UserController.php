@@ -12,10 +12,10 @@ class UserController
 		if (!$email || !$pass) return 'Vul e-mail en wachtwoord in';
 		// simple backoff
 		sleep(1);
-		if (auth_login($email, $pass)) {
-			self::audit('login', ['email' => $email]);
-			redirect('/public/dashboard/index.php');
-		}
+			if (auth_login($email, $pass)) {
+				self::audit('login', ['email' => $email]);
+				redirect('/dashboard/index.php');
+			}
 		return 'Onjuiste login';
 	}
 
@@ -42,7 +42,7 @@ class UserController
 		$role = $_POST['role'] ?? 'visitor';
 		User::updateRole($id, $role);
 		self::audit('role_update', ['user_id' => $id, 'role' => $role]);
-		redirect('/public/dashboard/users.php');
+		redirect('/dashboard/users.php');
 	}
 
 	private static function audit(string $action, array $changes): void {

@@ -18,8 +18,8 @@ class MediaController
 		$slug = $_POST['slug'] ?? ('wonder-' . $wonderId);
 		$destDir = __DIR__ . '/../../public/assets/img/wonders';
 		@mkdir($destDir, 0777, true);
-		$destRel = '/public/assets/img/wonders/' . $slug . '-' . time() . '.' . $ext;
-		$destAbs = __DIR__ . '/../../' . ltrim($destRel, '/');
+		$destRel = '/assets/img/wonders/' . $slug . '-' . time() . '.' . $ext;
+		$destAbs = __DIR__ . '/../../public/' . ltrim($destRel, '/');
 		if (!move_uploaded_file($f['tmp_name'], $destAbs)) return 'Kon bestand niet opslaan';
 		$pdo = get_pdo();
 		$stmt = $pdo->prepare('INSERT INTO media(wonder_id,type,url,mime,size,status,created_by) VALUES(?,?,?,?,?,"pending",?)');

@@ -11,7 +11,7 @@ $items = $data['items'];
 <?php include __DIR__ . '/../partials/nav.php'; ?>
 <main class="container">
 	<h1>Mijn wonderen</h1>
-	<a class="btn" href="/public/dashboard/wonder_new.php">Nieuw wonder</a>
+	<a class="btn" href="/dashboard/wonder_new.php">Nieuw wonder</a>
 	<table class="table" aria-label="Mijn records" style="margin-top:12px">
 		<thead><tr><th>Titel</th><th>Status</th><th>Continent</th><th>Categorie</th><th>Acties</th></tr></thead>
 		<tbody>
@@ -26,7 +26,7 @@ $items = $data['items'];
 				<td><?php echo e($w['continent']); ?></td>
 				<td><?php echo e($w['category']); ?></td>
 				<td>
-					<a class="btn" href="/public/dashboard/wonder_edit.php?id=<?php echo (int)$w['id']; ?>">Bewerken</a>
+					<a class="btn" href="/dashboard/wonder_edit.php?id=<?php echo (int)$w['id']; ?>">Bewerken</a>
 				</td>
 			</tr>
 			<?php endforeach; ?>

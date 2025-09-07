@@ -4,6 +4,10 @@ require_once __DIR__ . '/../../app/lib/auth.php';
 require_once __DIR__ . '/../../app/models/User.php';
 require_once __DIR__ . '/../../app/controllers/UserController.php';
 require_role(['admin']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    UserController::updateRole();
+    exit;
+}
 $users = User::all();
 ?>
 <?php include __DIR__ . '/../partials/header.php'; ?>
@@ -18,7 +22,7 @@ $users = User::all();
 				<td><?php echo (int)$u['id']; ?></td>
 				<td><?php echo e($u['email']); ?></td>
 				<td>
-					<form method="post" action="/app/controllers/user_role_update.php">
+					<form method="post" action="/dashboard/users.php">
 						<?php echo csrf_field(); ?>
 						<input type="hidden" name="id" value="<?php echo (int)$u['id']; ?>">
 						<select name="role" class="input">
