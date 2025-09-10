@@ -1,0 +1,117 @@
+/* Codex Mundi – App Styles */
+:root{
+  --bg: #f7f7fb;
+  --panel: #ffffff;
+  --text: #1f2328;
+  --muted: #5b6168;
+  --border: #e6e8eb;
+  --primary: #1f6feb;
+  --primary-600: #1a60d0;
+  --success-bg:#e6ffed; --success:#03543f; --success-br:#84e1bc;
+  --error-bg:#ffefef; --error:#9b1c1c; --error-br:#f5c6cb;
+  --badge:#eef1f4;
+}
+[data-theme="dark"]{
+  --bg: #0b0f14;
+  --panel: #0f1520;
+  --text: #e6edf3;
+  --muted: #9da7b3;
+  --border: #1d2733;
+  --primary: #5eb0ef;
+  --primary-600: #71b8ef;
+  --success-bg:#10331f; --success:#8de1b4; --success-br:#205438;
+  --error-bg:#2a1313; --error:#ffb3b3; --error-br:#4a1a1a;
+  --badge:#1b2330;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Inter,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.flex{display:flex;gap:.75rem}
+.between{justify-content:space-between}
+.center{align-items:center}
+.space-y>*+*{margin-top:1rem}
+.muted{color:var(--muted)}
+
+/* Header / Nav */
+.site-header{position:sticky;top:0;backdrop-filter:saturate(1.2) blur(6px);background:color-mix(in hsl, var(--bg) 84%, transparent);border-bottom:1px solid var(--border);z-index:10}
+.brand{font-weight:800;letter-spacing:.2px;text-decoration:none;color:var(--text)}
+.brand-logo{height:28px;vertical-align:middle;display:block}
+.nav{display:flex;gap:.5rem;align-items:center}
+.nav-item{position:relative;display:inline-block;padding:.4rem .7rem;border-radius:8px;text-decoration:none;color:var(--text)}
+.nav-item:hover{color:var(--primary);background:color-mix(in hsl, var(--panel) 85%, transparent)}
+.nav-item.active{color:#fff;background:var(--primary);border:1px solid var(--primary-600)}
+.nav-item.active:hover{color:#fff}
+.inline{display:inline}
+
+/* Buttons */
+.btn,.btn-primary,.btn-secondary,button{display:inline-block;padding:.55rem .9rem;border-radius:8px;border:1px solid var(--border);cursor:pointer;background:var(--panel);color:var(--text);text-decoration:none}
+.btn-primary{background:var(--primary);border-color:var(--primary-600);color:#fff}
+.btn-primary:hover{background:var(--primary-600)}
+.btn-secondary{background:transparent}
+.btn-link{background:transparent;border:0;color:var(--muted);cursor:pointer}
+.btn-link:hover{color:var(--text)}
+
+/* Cards */
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:1rem;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+
+/* Micro animations */
+.card{transition:transform .2s ease, box-shadow .2s ease}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.07)}
+.nav-item::after{content:"";position:absolute;left:.75rem;right:.75rem;bottom:.2rem;height:2px;width:0;background:var(--primary);transition:width .2s ease}
+.nav-item:hover::after{width:calc(100% - 1.5rem)}
+.alert{animation:slideDown .25s ease}
+@keyframes slideDown{from{transform:translateY(-6px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* Subtle page fade-in */
+body{animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:.85}to{opacity:1}}
+
+/* Alerts */
+.alert{padding:.6rem .85rem;border-radius:10px;margin:.75rem 0;font-weight:600;border:1px solid}
+.alert.success{background:var(--success-bg);color:var(--success);border-color:var(--success-br)}
+.alert.error{background:var(--error-bg);color:var(--error);border-color:var(--error-br)}
+
+/* Forms */
+label{display:block;margin:.5rem 0 .35rem}
+input,select,textarea{width:100%;padding:.6rem;border:1px solid var(--border);background:var(--panel);border-radius:10px;color:var(--text)}
+input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in hsl, var(--primary) 35%, transparent)}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+th,td{border-bottom:1px solid var(--border);padding:.7rem;text-align:left}
+thead th{background:color-mix(in hsl, var(--panel) 88%, var(--bg))}
+
+/* Badges */
+.badge{display:inline-block;padding:.2rem .5rem;border-radius:999px;background:var(--badge);border:1px solid var(--border);font-size:.8rem}
+
+/* Footer */
+.site-footer{border-top:1px solid var(--border);margin-top:2rem}
+
+/* Utilities */
+.to-top{text-align:center;margin:2rem 0;color:var(--muted)}
+.to-top a{text-decoration:none;color:var(--muted)}
+.to-top a:hover{color:var(--primary)}
+
+/* Images */
+img{max-width:100%;height:auto;border-radius:8px}
+.cover{aspect-ratio:16/9;object-fit:cover;border-radius:10px}
+.slider{position:relative}
+.slider-main{position:relative;overflow:hidden;border-radius:12px;border:1px solid var(--border)}
+.slider-main img{width:100%;display:block}
+.slider-nav{display:flex;gap:.5rem;overflow:auto;padding:.5rem 0}
+.slider-thumb{width:110px;height:70px;object-fit:cover;border-radius:8px;border:2px solid transparent;flex:0 0 auto;cursor:pointer}
+.slider-thumb.active{border-color:var(--primary)}
+.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.45);border:0;color:#fff;padding:.4rem .6rem;border-radius:8px;cursor:pointer}
+.slider-btn:hover{background:rgba(0,0,0,.6)}
+.slider-btn.prev{left:.5rem}
+.slider-btn.next{right:.5rem}
+
+/* Links */
+a{color:var(--primary)}
+a:hover{text-decoration:underline}
+
+/* Code */
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+pre{background:var(--panel);border:1px solid var(--border);padding:.75rem;border-radius:10px;overflow:auto}
