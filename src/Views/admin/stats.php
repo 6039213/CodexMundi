@@ -1,5 +1,5 @@
 <div class="card">
-  <h2>Statistieken</h2>
+  <h2 style="margin-top:0">Statistieken</h2>
   <h3>Wonderen per continent</h3>
   <table>
     <thead><tr><th>Continent</th><th>Aantal</th></tr></thead>
@@ -11,14 +11,14 @@
   </table>
 
   <h3>Laatst bewerkt</h3>
-  <ul>
+  <ul class="prose">
     <?php foreach ($latestEdited as $w): ?>
       <li><a href="<?php echo $base; ?>/wonders/<?php echo (int)$w['id'] ?>"><?php echo htmlspecialchars($w['name']) ?></a> (<?php echo htmlspecialchars($w['updated_at']) ?>)</li>
     <?php endforeach; ?>
   </ul>
 
   <h3>Meest bekeken</h3>
-  <ul>
+  <ul class="prose">
     <?php foreach ($mostViewed as $w): ?>
       <li><a href="<?php echo $base; ?>/wonders/<?php echo (int)$w['id'] ?>"><?php echo htmlspecialchars($w['name']) ?></a> (<?php echo (int)$w['view_count'] ?> views)</li>
     <?php endforeach; ?>

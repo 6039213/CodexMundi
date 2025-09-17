@@ -1,6 +1,6 @@
 <div class="card">
-  <h2>Nieuw wereldwonder</h2>
-<form method="post" action="<?php echo $base; ?>/wonders">
+  <h2 style="margin-top:0">Nieuw wereldwonder</h2>
+<form method="post" action="<?php echo $base; ?>/wonders" class="space-y">
     <label>Naam</label><input name="name" required>
     <label>Korte beschrijving</label><textarea name="short_description"></textarea>
     <label>Jaar</label><input type="number" name="year">
@@ -16,6 +16,8 @@
     <label>Verhaal</label><textarea name="story"></textarea>
     <label>Latitude</label><input type="number" step="any" name="lat">
     <label>Longitude</label><input type="number" step="any" name="lng">
-    <button>Aanmaken</button>
+    <div class="form-actions">
+      <button class="btn btn-primary">Aanmaken</button>
+    </div>
   </form>
 </div>

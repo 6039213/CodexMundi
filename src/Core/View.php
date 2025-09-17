@@ -23,6 +23,14 @@ class View {
             }
         }
 
+        // Fetch unread notifications for toasts
+        $notifications = [];
+        if (!empty($_SESSION['user'])) {
+            try {
+                $notifications = \CodexMundi\Services\Notifications::unreadFor((int)$_SESSION['user']['id']);
+            } catch (\Throwable $e) { $notifications = []; }
+        }
+
         extract($data);
         $flash = $_SESSION['flash'] ?? null;
         unset($_SESSION['flash']);

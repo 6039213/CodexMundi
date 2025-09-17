@@ -13,7 +13,9 @@ class WonderController extends BaseController {
             SELECT path FROM photos p WHERE p.wonder_id=wonders.id AND p.approved=1 ORDER BY id DESC LIMIT 1
         ) as cover FROM wonders ORDER BY name');
         $wonders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $this->view('wonders/index.php', compact('wonders'));
+        // top viewed for visitors
+        $top = $db->query('SELECT id,name,view_count FROM wonders ORDER BY view_count DESC LIMIT 5')->fetchAll(PDO::FETCH_ASSOC);
+        $this->view('wonders/index.php', ['wonders'=>$wonders, 'topViewed'=>$top]);
     }
 
     public function search(): void {
@@ -84,6 +86,13 @@ class WonderController extends BaseController {
             date('c')
         ]);
         \CodexMundi\Core\Audit::log((int)$user['id'], 'create', 'wonder', (int)$db->lastInsertId());
+        // notify editors/admins
+        try {
+            $wid = (int)$db->lastInsertId();
+            $link = '/wonders/' . $wid;
+            \CodexMundi\Services\Notifications::notifyRole('redacteur', 'Nieuw voorstel: wereldwonder wachten op beoordeling', $link, 'info');
+            \CodexMundi\Services\Notifications::notifyRole('beheerder', 'Nieuw voorstel: wereldwonder wachten op beoordeling', $link, 'info');
+        } catch (\Throwable $e) {}
         $_SESSION['flash'] = ['type'=>'success','message'=>'Wereldwonder aangemaakt, wacht op goedkeuring.'];
         $this->redirect('/');
     }
@@ -156,6 +165,12 @@ class WonderController extends BaseController {
             $db->prepare($sql)->execute($params);
         }
         \CodexMundi\Core\Audit::log((int)$user['id'], 'update', 'wonder', (int)$id);
+        // notify editors/admins about pending approval
+        try {
+            $link = '/wonders/' . (int)$id;
+            \CodexMundi\Services\Notifications::notifyRole('redacteur', 'Wijziging aan wereldwonder, wacht op beoordeling', $link, 'info');
+            \CodexMundi\Services\Notifications::notifyRole('beheerder', 'Wijziging aan wereldwonder, wacht op beoordeling', $link, 'info');
+        } catch (\Throwable $e) {}
 
         // Tags can be managed by redacteur or beheerder
         if (in_array($user['role'], ['redacteur','beheerder'], true)) {

@@ -1,6 +1,6 @@
 <div class="card">
-  <h2>Wereldwonder bewerken</h2>
-<form method="post" action="<?php echo $base; ?>/wonders/<?php echo (int)$wonder['id'] ?>">
+  <h2 style="margin-top:0">Wereldwonder bewerken</h2>
+<form method="post" action="<?php echo $base; ?>/wonders/<?php echo (int)$wonder['id'] ?>" class="space-y">
     <label>Naam</label><input name="name" value="<?php echo htmlspecialchars($wonder['name']) ?>">
     <label>Korte beschrijving</label><textarea name="short_description"><?php echo htmlspecialchars($wonder['short_description'] ?? '') ?></textarea>
     <label>Jaar</label><input type="number" name="year" value="<?php echo htmlspecialchars((string)($wonder['year'] ?? '')) ?>">
@@ -21,6 +21,8 @@
       <label>Tags (komma-gescheiden)</label>
       <input name="tags" value="<?php echo htmlspecialchars(implode(', ', $tags ?? [])) ?>">
     <?php endif; ?>
-    <button>Opslaan</button>
+    <div class="form-actions">
+      <button class="btn btn-primary">Opslaan</button>
+    </div>
   </form>
 </div>

@@ -1,5 +1,5 @@
 <div class="card">
-  <h2>Zoeken en filteren</h2>
+  <h2 style="margin-top:0">Zoeken en filteren</h2>
   <form method="get" action="<?php echo $base; ?>/search" class="grid">
     <div>
       <label>Naam</label>
@@ -29,18 +29,18 @@
         <option value="year" <?php echo (($sort??'')==='year'?'selected':'') ?>>jaartal</option>
       </select>
     </div>
-    <div style="align-self:end"><button>Zoeken</button></div>
+    <div style="align-self:end"><button class="btn btn-primary">Zoeken</button></div>
   </form>
 </div>
 
 <div class="card">
-  <h3>Resultaten</h3>
+  <h3 style="margin-top:0">Resultaten</h3>
   <table>
     <thead><tr><th>Naam</th><th>Continent</th><th>Type</th><th>Jaar</th><th>Status</th></tr></thead>
     <tbody>
       <?php foreach ($wonders as $w): ?>
         <tr>
-          <td><a href="<?php echo $base; ?>/wonders/<?php echo (int)$w['id'] ?>"><?php echo htmlspecialchars($w['name']) ?></a></td>
+          <td><a href="<?php echo $base; ?>/wonders/<?php echo (int)$w['id'] ?>" title="<?php echo htmlspecialchars($w['short_description'] ?? '') ?>"><?php echo htmlspecialchars($w['name']) ?></a></td>
           <td><?php echo htmlspecialchars($w['continent'] ?? '-') ?></td>
           <td><?php echo htmlspecialchars($w['type'] ?? '-') ?></td>
           <td><?php echo htmlspecialchars((string)($w['year'] ?? '-')) ?></td>

@@ -1,5 +1,6 @@
 <div class="card">
   <h2>Mijn bijdragen</h2>
+  <p><a class="btn" href="<?php echo $base; ?>/export/my_wonders.csv">Download als CSV</a></p>
   <?php if (empty($mine)): ?>
     <p class="muted">Nog geen inzendingen. <a href="<?php echo $base; ?>/wonders/create">Voeg je eerste wonder toe</a>.</p>
   <?php else: ?>
@@ -18,4 +19,3 @@
     </table>
   <?php endif; ?>
 </div>
-

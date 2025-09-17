@@ -12,12 +12,13 @@ class AuthController extends BaseController {
     }
 
     public function login(): void {
-        // Simple rate-limit: 5 attempts per minute per session
+        // Simple rate-limit: configurable attempts per minute per session
         $now = time();
         $_SESSION['login_attempts'] = $_SESSION['login_attempts'] ?? [];
         // purge old
         $_SESSION['login_attempts'] = array_values(array_filter($_SESSION['login_attempts'], fn($t) => ($now - (int)$t) < 60));
-        if (count($_SESSION['login_attempts']) >= 5) {
+        $max = \CodexMundi\Services\Settings::loginMaxAttemptsPerMinute();
+        if (count($_SESSION['login_attempts']) >= $max) {
             $_SESSION['flash'] = ['type' => 'error', 'message' => 'Te veel pogingen. Probeer over een minuut opnieuw.'];
             $this->redirect('/login');
         }
@@ -63,13 +64,20 @@ class AuthController extends BaseController {
         $name = trim($_POST['name'] ?? '');
         $email = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
-        if ($name === '' || $email === '' || strlen($password) < 6) {
-            $_SESSION['flash'] = ['type' => 'error', 'message' => 'Vul alle velden in (min. 6 tekens wachtwoord).'];
+        $minLen = \CodexMundi\Services\Settings::passwordMinLength();
+        if ($name === '' || $email === '' || strlen($password) < $minLen) {
+            $_SESSION['flash'] = ['type' => 'error', 'message' => 'Vul alle velden in (min. ' . $minLen . ' tekens wachtwoord).'];
             $this->redirect('/register');
         }
         $db = Database::conn();
-        // default role: bezoeker
+        // default role: bezoeker; if first user, promote to beheerder
         $roleId = (int)$db->query("SELECT id FROM roles WHERE name='bezoeker'")->fetchColumn();
+        try {
+            $count = (int)$db->query('SELECT COUNT(*) FROM users')->fetchColumn();
+            if ($count === 0) {
+                $roleId = (int)$db->query("SELECT id FROM roles WHERE name='beheerder'")->fetchColumn();
+            }
+        } catch (\Throwable $e) {}
         $stmt = $db->prepare('INSERT INTO users (email,password,name,role_id,created_at) VALUES (?,?,?,?,?)');
         try {
             $stmt->execute([$email, password_hash($password, PASSWORD_DEFAULT), $name, $roleId, date('c')]);

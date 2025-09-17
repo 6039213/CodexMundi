@@ -48,6 +48,16 @@ class Migrations {
             FOREIGN KEY(updated_by) REFERENCES users(id)
         );');
 
+        // Ensure optional 'cover' column exists on wonders (for external cover URLs)
+        try {
+            $cols = $db->query("PRAGMA table_info(wonders)")->fetchAll(PDO::FETCH_ASSOC);
+            $hasCover = false;
+            foreach ($cols as $c) { if (isset($c['name']) && $c['name'] === 'cover') { $hasCover = true; break; } }
+            if (!$hasCover) {
+                $db->exec('ALTER TABLE wonders ADD COLUMN cover TEXT');
+            }
+        } catch (\Throwable $e) { /* ignore if unavailable */ }
+
         // tags
         $db->exec('CREATE TABLE IF NOT EXISTS tags (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -103,6 +113,18 @@ class Migrations {
             value TEXT
         );');
 
+        // notifications
+        $db->exec('CREATE TABLE IF NOT EXISTS notifications (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            type TEXT,
+            message TEXT NOT NULL,
+            link TEXT,
+            is_read INTEGER DEFAULT 0,
+            created_at TEXT NOT NULL,
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+        );');
+
         self::seed();
     }
 
@@ -115,20 +137,7 @@ class Migrations {
             $stmt->execute([$r]);
         }
 
-        // Ensure an admin account exists (requested credentials)
-        $adminRoleId = (int) $db->query("SELECT id FROM roles WHERE name='beheerder'")->fetchColumn();
-        $now = date('c');
-        $stmt = $db->prepare(
-            'INSERT INTO users (email, password, name, role_id, created_at) VALUES (?,?,?,?,?) '
-            . 'ON CONFLICT(email) DO UPDATE SET password=excluded.password, role_id=excluded.role_id'
-        );
-        $stmt->execute([
-            'admin@codexmundi.com',
-            password_hash('codexmundi2025', PASSWORD_DEFAULT),
-            'Admin',
-            $adminRoleId,
-            $now
-        ]);
+        // No default users seeded for security. Use registration; first user can become admin.
 
         // Seed world wonders if table empty (classic + modern)
         $wCount = (int) $db->query('SELECT COUNT(*) FROM wonders')->fetchColumn();
@@ -374,6 +383,8 @@ class Migrations {
 
         // Seed external slideshow photos from Wikimedia Commons (idempotent)
         try {
+            // disabled: external slideshow seeding removed for single-image policy
+            return;
             $photoMap = [
                 'Great Pyramid of Giza' => [
                     ['https://commons.wikimedia.org/wiki/Special:FilePath/All%20Gizah%20Pyramids.jpg','piramide van gizeh 1'],

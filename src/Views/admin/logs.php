@@ -1,5 +1,5 @@
 <div class="card">
-  <h2>Audit log (laatste 100)</h2>
+  <h2 style="margin-top:0">Audit log (laatste 100)</h2>
   <table>
     <thead><tr><th>ID</th><th>Gebruiker</th><th>Actie</th><th>Entiteit</th><th>Entiteit ID</th><th>Tijd</th><th>Details</th></tr></thead>
     <tbody>

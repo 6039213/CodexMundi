@@ -186,6 +186,7 @@ $db->beginTransaction();
 try {
     $findWonder = $db->prepare('SELECT id FROM wonders WHERE name=?');
     $delExternal = $db->prepare("DELETE FROM photos WHERE wonder_id=? AND (path NOT LIKE '/%')");
+    $updateCoverIfEmpty = $db->prepare('UPDATE wonders SET cover=? WHERE id=? AND (cover IS NULL OR cover="")');
     $insertPhoto = $db->prepare('INSERT INTO photos (wonder_id,path,title,approved,uploaded_by,created_at) VALUES (?,?,?,?,?,?)');
 
     foreach ($photoMap as $name => $items) {
@@ -195,6 +196,12 @@ try {
 
         // Remove existing external photos to avoid duplicates and bad links
         $delExternal->execute([(int)$wid]);
+
+        // Ensure cover set if empty (first curated URL)
+        if (!empty($items[0][0])) {
+            $firstUrl = (string)$items[0][0];
+            $updateCoverIfEmpty->execute([$firstUrl, (int)$wid]);
+        }
 
         // Insert curated set (6 per wonder)
         foreach ($items as $it) {

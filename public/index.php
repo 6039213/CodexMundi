@@ -11,6 +11,7 @@ use CodexMundi\Controllers\WonderController;
 use CodexMundi\Controllers\MediaController;
 use CodexMundi\Controllers\AdminController;
 use CodexMundi\Controllers\WonderController as WC;
+use CodexMundi\Services\Notifications;
 
 $router = new Router();
 
@@ -41,6 +42,7 @@ $router->get('/admin', [AdminController::class, 'dashboard']);
 $router->get('/admin/settings', [AdminController::class, 'settings']);
 $router->post('/admin/settings', [AdminController::class, 'saveSettings']);
 $router->get('/admin/users', [AdminController::class, 'users']);
+$router->post('/admin/users/create', [AdminController::class, 'createUser']);
 $router->post('/admin/users/{id}/role', [AdminController::class, 'changeUserRole']);
 $router->get('/admin/logs', [AdminController::class, 'logs']);
 $router->post('/admin/photos/{id}/approve', [AdminController::class, 'approvePhoto']);
@@ -51,7 +53,15 @@ $router->post('/admin/wonders/{id}/approve', [AdminController::class, 'approveWo
 $router->get('/search', [WonderController::class, 'search']);
 $router->get('/stats', [AdminController::class, 'stats']);
 $router->get('/export/wonders.csv', [AdminController::class, 'exportWondersCsv']);
+$router->get('/export/my_wonders.csv', [AdminController::class, 'exportMyWondersCsv']);
 $router->get('/map', [WonderController::class, 'map']);
+
+// Notifications
+$router->post('/notifications/read', function(){
+    $user = $_SESSION['user'] ?? null;
+    if ($user) { Notifications::markAllRead((int)$user['id']); }
+    http_response_code(204);
+});
 
 // Researcher dashboard: my submissions
 $router->get('/my', [WonderController::class, 'my']);

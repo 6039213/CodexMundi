@@ -52,7 +52,14 @@ class MediaController extends BaseController {
             $stmt = $db->prepare('INSERT INTO photos (wonder_id,path,title,approved,uploaded_by,created_at) VALUES (?,?,?,?,?,?)');
             $stmt->execute([(int)$id, '/uploads/photos/' . $filename, trim($_POST['title'] ?? ''), 0, (int)$_SESSION['user']['id'], date('c')]);
         }
-        Audit::log((int)$_SESSION['user']['id'], 'upload', 'photo', (int)$db->lastInsertId(), 'wonder_id='.(int)$id);
+        $photoId = (int)$db->lastInsertId();
+        Audit::log((int)$_SESSION['user']['id'], 'upload', 'photo', $photoId, 'wonder_id='.(int)$id);
+        try {
+            $link = '/wonders/' . (int)$id;
+            \CodexMundi\Services\Notifications::notify((int)$_SESSION['user']['id'], 'Foto ingestuurd, wacht op beoordeling', $link, 'info');
+            \CodexMundi\Services\Notifications::notifyRole('redacteur', 'Nieuwe foto ter beoordeling', $link, 'info');
+            \CodexMundi\Services\Notifications::notifyRole('beheerder', 'Nieuwe foto ter beoordeling', $link, 'info');
+        } catch (\Throwable $e) {}
         $_SESSION['flash'] = ['type'=>'success','message'=>'Foto geǬpload, wacht op goedkeuring.'];
         $this->redirect('/wonders/' . (int)$id);
     }
@@ -100,4 +107,3 @@ class MediaController extends BaseController {
         $this->redirect('/wonders/' . (int)$id);
     }
 }
-

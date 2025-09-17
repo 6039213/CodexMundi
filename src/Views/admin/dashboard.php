@@ -1,5 +1,5 @@
 <div class="card">
-  <h2>Te beoordelen</h2>
+  <h2 style="margin-top:0">Te beoordelen</h2>
   <h3>Foto's</h3>
   <table>
     <thead><tr><th>Wonder</th><th>Voorbeeld</th><th>Titel</th><th>Acties</th></tr></thead>
@@ -11,8 +11,10 @@
           <td><img src="<?php echo htmlspecialchars($psrc); ?>" style="max-height:60px"></td>
           <td><?php echo htmlspecialchars($p['title'] ?? '') ?></td>
           <td>
-            <form method="post" action="<?php echo $base; ?>/admin/photos/<?php echo (int)$p['id'] ?>/approve" style="display:inline"><button>Goedkeuren</button></form>
-            <form method="post" action="<?php echo $base; ?>/admin/photos/<?php echo (int)$p['id'] ?>/reject" style="display:inline"><button style="background:#c62828">Afkeuren</button></form>
+            <div class="form-actions">
+              <form method="post" action="<?php echo $base; ?>/admin/photos/<?php echo (int)$p['id'] ?>/approve" class="inline"><button class="btn btn-primary">Goedkeuren</button></form>
+              <form method="post" action="<?php echo $base; ?>/admin/photos/<?php echo (int)$p['id'] ?>/reject" class="inline"><button class="btn btn-danger">Afkeuren</button></form>
+            </div>
           </td>
         </tr>
       <?php endforeach; ?>
@@ -28,7 +30,7 @@
           <td><a href="<?php echo $base; ?>/wonders/<?php echo (int)$w['id'] ?>"><?php echo htmlspecialchars($w['name']) ?></a></td>
           <td><?php echo htmlspecialchars($w['updated_at']) ?></td>
           <td>
-            <form method="post" action="<?php echo $base; ?>/admin/wonders/<?php echo (int)$w['id'] ?>/approve" style="display:inline"><button>Goedkeuren</button></form>
+            <form method="post" action="<?php echo $base; ?>/admin/wonders/<?php echo (int)$w['id'] ?>/approve" class="inline"><button class="btn btn-primary">Goedkeuren</button></form>
           </td>
         </tr>
       <?php endforeach; ?>

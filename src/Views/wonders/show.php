@@ -1,6 +1,6 @@
 <div class="card">
-  <h2><?php echo htmlspecialchars($wonder['name']) ?></h2>
-  <p><?php echo nl2br(htmlspecialchars($wonder['short_description'] ?? '')) ?></p>
+  <h2 style="margin-top:0"><?php echo htmlspecialchars($wonder['name']) ?></h2>
+  <p class="prose"><?php echo nl2br(htmlspecialchars($wonder['short_description'] ?? '')) ?></p>
   <p>
     <span class="badge"><?php echo htmlspecialchars($wonder['continent'] ?? '-') ?></span>
     <span class="badge"><?php echo htmlspecialchars($wonder['type'] ?? '-') ?></span>
@@ -8,8 +8,10 @@
     <?php if (!(int)$wonder['approved']): ?><span class="badge">Wacht op goedkeuring</span><?php endif; ?>
   </p>
   <p><strong>Jaar:</strong> <?php echo htmlspecialchars((string)($wonder['year'] ?? '-')) ?></p>
-  <p><strong>Mythe:</strong><br><?php echo nl2br(htmlspecialchars($wonder['myth'] ?? '')) ?></p>
-  <p><strong>Verhaal:</strong><br><?php echo nl2br(htmlspecialchars($wonder['story'] ?? '')) ?></p>
+  <div class="prose">
+    <p><strong>Mythe:</strong><br><?php echo nl2br(htmlspecialchars($wonder['myth'] ?? '')) ?></p>
+    <p><strong>Verhaal:</strong><br><?php echo nl2br(htmlspecialchars($wonder['story'] ?? '')) ?></p>
+  </div>
   <p><strong>Locatie:</strong> <?php echo htmlspecialchars((string)($wonder['lat'] ?? '?')) ?>, <?php echo htmlspecialchars((string)($wonder['lng'] ?? '?')) ?></p>
   <?php if (!empty($tags)): ?>
     <p><strong>Tags:</strong>
@@ -20,11 +22,11 @@
   <?php endif; ?>
 
   <?php if (!empty($user) && in_array($user['role'], ['onderzoeker','beheerder','archivaris'])): ?>
-    <p>
-      <a href="<?php echo $base; ?>/wonders/<?php echo (int)$wonder['id'] ?>/edit"><button>Bewerken</button></a>
+    <p class="form-actions">
+      <a href="<?php echo $base; ?>/wonders/<?php echo (int)$wonder['id'] ?>/edit" class="btn">Bewerken</a>
       <?php if ($user['role']==='beheerder'): ?>
-        <form action="<?php echo $base; ?>/wonders/<?php echo (int)$wonder['id'] ?>/delete" method="post" style="display:inline" onsubmit="return confirm('Verwijderen?')">
-          <button style="background:#c62828">Verwijderen</button>
+        <form action="<?php echo $base; ?>/wonders/<?php echo (int)$wonder['id'] ?>/delete" method="post" class="inline" onsubmit="return confirm('Verwijderen?')">
+          <button class="btn btn-danger">Verwijderen</button>
         </form>
       <?php endif; ?>
     </p>
@@ -32,44 +34,18 @@
 </div>
 
 <div class="card">
-  <h3>Foto's</h3>
-  <?php $slides = array_map(function($p) use ($base){ $path=(string)$p['path']; $src=\CodexMundi\Core\Url::resolveMedia($path, $base); return ['src'=>$src,'title'=>$p['title']??'']; }, $photos); ?>
-  <?php if (!empty($slides)): $first=$slides[0]; ?>
-    <div class="slider" data-index="0">
-      <div class="slider-main">
-        <a id="slide-link" href="<?php echo htmlspecialchars($first['src']); ?>" target="_blank" rel="noopener noreferrer">
-          <img id="slide-main" src="<?php echo htmlspecialchars($first['src']); ?>" alt="">
-        </a>
-        <button class="slider-btn prev" type="button" onclick="slidePrev(this)">&#9664;</button>
-        <button class="slider-btn next" type="button" onclick="slideNext(this)">&#9654;</button>
-      </div>
-      <div class="slider-nav">
-        <?php foreach ($slides as $i=>$s): ?>
-          <a href="<?php echo htmlspecialchars($s['src']); ?>" target="_blank" rel="noopener noreferrer">
-            <img class="slider-thumb <?php echo $i===0?'active':''; ?>" src="<?php echo htmlspecialchars($s['src']); ?>" alt="" onclick="slideGo(this, <?php echo $i; ?>)">
-          </a>
-        <?php endforeach; ?>
-      </div>
-    </div>
-    <script>
-    function findSlider(el){ while(el && !el.classList.contains('slider')) el=el.parentElement; return el; }
-    function slideSet(slider, idx){
-      var thumbs = slider.querySelectorAll('.slider-thumb');
-      if (!thumbs.length) return;
-      idx = (idx+thumbs.length)%thumbs.length;
-      slider.dataset.index = idx;
-      var main = slider.querySelector('#slide-main');
-      var link = slider.querySelector('#slide-link');
-      main.src = thumbs[idx].src;
-      link.href = thumbs[idx].src;
-      thumbs.forEach(function(t,k){ t.classList.toggle('active', k===idx); });
-    }
-    function slidePrev(btn){ var s=findSlider(btn); slideSet(s, (parseInt(s.dataset.index||'0',10)-1)); }
-    function slideNext(btn){ var s=findSlider(btn); slideSet(s, (parseInt(s.dataset.index||'0',10)+1)); }
-    function slideGo(thumb, idx){ var s=findSlider(thumb); slideSet(s, idx); }
-    </script>
+  <h3>Foto</h3>
+  <?php
+    $firstApproved = $photos[0]['path'] ?? null;
+    $fallback = $wonder['cover'] ?: ('/uploads/photos/wonder_' . (int)$wonder['id'] . '.svg');
+    $imgSrc = \CodexMundi\Core\Url::resolveMedia((string)($firstApproved ?: $fallback), $base);
+  ?>
+  <?php if ($imgSrc): ?>
+    <a href="<?php echo htmlspecialchars($imgSrc); ?>" target="_blank" rel="noopener noreferrer">
+      <img class="cover" src="<?php echo htmlspecialchars($imgSrc); ?>" alt="Foto van <?php echo htmlspecialchars($wonder['name']) ?>">
+    </a>
   <?php else: ?>
-    <p class="muted">Nog geen foto's.</p>
+    <p class="muted">Nog geen foto.</p>
   <?php endif; ?>
   <?php if (!empty($user) && in_array($user['role'], ['onderzoeker','beheerder'])): ?>
     <form method="post" action="<?php echo $base; ?>/wonders/<?php echo (int)$wonder['id'] ?>/photos" enctype="multipart/form-data" class="space-y">
@@ -77,7 +53,7 @@
       <label>Foto (jpg, png, webp)</label><input type="file" name="photo" accept="image/*">
       <div class="muted">of voeg toe via URL:</div>
       <input name="photo_url" placeholder="https://…/afbeelding.jpg">
-      <button>Uploaden</button>
+      <button class="btn btn-primary">Uploaden</button>
     </form>
   <?php endif; ?>
 </div>
@@ -95,8 +71,7 @@
       <label>Document (pdf, txt)</label><input type="file" name="document" accept="application/pdf,text/plain">
       <div class="muted">of voeg toe via URL:</div>
       <input name="document_url" placeholder="https://…">
-      <button>Uploaden</button>
+      <button class="btn btn-primary">Uploaden</button>
     </form>
   <?php endif; ?>
 </div>
-

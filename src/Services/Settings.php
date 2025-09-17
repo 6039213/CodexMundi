@@ -35,5 +35,14 @@ class Settings {
         $val = self::get('allowed_doc_types', implode(',', Config::ALLOWED_DOC_TYPES));
         return array_values(array_filter(array_map('trim', explode(',', (string)$val))));
     }
-}
 
+    // Security settings
+    public static function loginMaxAttemptsPerMinute(): int {
+        $v = (int) (self::get('login_max_attempts_per_minute', '5'));
+        return $v > 0 ? $v : 5;
+    }
+    public static function passwordMinLength(): int {
+        $v = (int) (self::get('password_min_length', '6'));
+        return $v >= 4 ? $v : 6;
+    }
+}

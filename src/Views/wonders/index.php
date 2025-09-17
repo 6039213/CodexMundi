@@ -1,22 +1,52 @@
-<div class="card">
-  <h2>Wereldwonderen</h2>
-  <p>Overzicht van alle wonderen. Alleen goedgekeurde items zijn als zodanig gemarkeerd.</p>
+<section class="hero" aria-label="Intro">
+  <h1>Ontdek de wonderen van de wereld</h1>
+  <p>Verken klassieke en moderne wereldwonderen op kaart en in verhalen. Draag zelf bij en help het archief groeien.</p>
+  <div class="hero-cta">
+    <a href="<?php echo $base; ?>/search" class="btn btn-primary">Zoek wonderen</a>
+    <a href="<?php echo $base; ?>/map" class="btn">Bekijk de kaart</a>
+    <?php if (!empty($user) && in_array($user['role'], ['onderzoeker','beheerder'])): ?>
+      <a href="<?php echo $base; ?>/wonders/create" class="btn">Nieuw wonder toevoegen</a>
+    <?php endif; ?>
+  </div>
+</section>
+
+<?php if (!empty($topViewed)): ?>
+<section class="space-y">
+  <h2 style="margin:0">Meest bekeken</h2>
+  <div class="card">
+    <ul>
+      <?php foreach ($topViewed as $t): ?>
+        <li class="reveal">
+          <a href="<?php echo $base; ?>/wonders/<?php echo (int)$t['id'] ?>"><?php echo htmlspecialchars($t['name']) ?></a>
+          <span class="muted">(<?php echo (int)$t['view_count'] ?>)</span>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+  </section>
+<?php endif; ?>
+
+<section class="space-y">
+  <div class="flex between center">
+    <h2 style="margin:0">Laatste toevoegingen</h2>
+    <a href="<?php echo $base; ?>/search" class="btn-link">Alles bekijken →</a>
+  </div>
   <div class="grid">
     <?php foreach ($wonders as $w): ?>
-      <div class="card">
+      <article class="card reveal">
         <?php $cover = $w['cover'] ?: ('/uploads/photos/wonder_' . (int)$w['id'] . '.svg'); $coverSrc = \CodexMundi\Core\Url::resolveMedia((string)$cover, $base); ?>
         <a href="<?php echo $base; ?>/wonders/<?php echo (int)$w['id'] ?>" class="block">
           <img class="cover" src="<?php echo htmlspecialchars($coverSrc); ?>" alt="Cover: <?php echo htmlspecialchars($w['name']) ?>">
         </a>
-        <h3 style="margin:.6rem 0 .2rem"><a href="<?php echo $base; ?>/wonders/<?php echo (int)$w['id'] ?>"><?php echo htmlspecialchars($w['name']) ?></a></h3>
-        <p><?php echo htmlspecialchars($w['short_description'] ?? '') ?></p>
+        <h3 style="margin:.7rem 0 .3rem"><a href="<?php echo $base; ?>/wonders/<?php echo (int)$w['id'] ?>"><?php echo htmlspecialchars($w['name']) ?></a></h3>
+        <p class="muted" style="margin:.2rem 0 .6rem"><?php echo htmlspecialchars($w['short_description'] ?? '') ?></p>
         <p>
           <span class="badge"><?php echo htmlspecialchars($w['continent'] ?? '-') ?></span>
           <span class="badge"><?php echo htmlspecialchars($w['type'] ?? '-') ?></span>
           <span class="badge"><?php echo ((int)$w['exists_now'] ? 'Bestaat' : 'Verdwenen') ?></span>
           <?php if (!(int)$w['approved']): ?><span class="badge">Wacht op goedkeuring</span><?php endif; ?>
         </p>
-      </div>
+      </article>
     <?php endforeach; ?>
   </div>
-</div>
+</section>

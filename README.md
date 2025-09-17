@@ -7,8 +7,7 @@ Overview
 Quick Start
 1) Ensure your web root points to `public/` (Laragon: set Document Root to `public`).
 2) Open the site in your browser. On first load the SQLite DB and seed data are created.
-3) Login as admin: email `admin@example.com`, password `admin123`.
-   - Change this immediately in your DB/users page when available.
+3) First-time setup: register a new account. The first registered user becomes 'beheerder' automatically; afterwards admins can assign roles under /admin/users.
 
 Folders
 - `public/`: web root, router at `index.php`, uploads subfolders.
@@ -43,4 +42,16 @@ Notes
 - Map is an offline stub (table with lat/lng). With internet you can add Leaflet.
 - Export is CSV (simple and portable). PDF export can be added later if libraries permitted.
 - Basic audit log is recorded for create/update/delete/approve/upload actions.
+
+Frontend Redesign
+- Tokens & theming: `public/assets/app.premium.css` augments base styles with design tokens, dark mode, and a premium UI polish. It is loaded after `assets/app.css` via `src/Views/layout.php`.
+- Dark mode: Toggle persists in `localStorage` and applies `[data-theme="dark"]` on `<html>`. System `prefers-color-scheme` respected when no explicit choice.
+- Components: server-rendered partials under `src/Views/components/ui/*` (Button, Input, Select, Textarea, Checkbox, Radio, Switch, Badge, Tooltip, Modal, Drawer, Tabs, Accordion, Alert, Card, Table, Pagination, Skeleton, EmptyState, Navbar, Sidebar, Footer).
+  Example usage:
+  ```php
+  <?php $label = 'Opslaan'; $variant='primary'; include __DIR__.'/../components/ui/button.php'; ?>
+  ```
+- Accessibility: global skip link to `#main`, visible focus rings, ARIA `aria-current="page"` on active nav.
+- Responsive: container and grids adapt at 640/768/1024/1280/1536px; tables gain horizontal scroll on small screens.
+
 
